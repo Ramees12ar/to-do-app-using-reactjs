@@ -13,16 +13,21 @@ class Todo extends Component {
         this.setState({ item: e.target.value })
     }
     addItem = () => {
+        var str = localStorage.getItem("localData");
+        var arr;
+        if(str != null){
+            arr = JSON.parse(str);
+            this.setState({data: arr }); 
+        }
+        else{
+            arr = this.state.data;
+            this.setState({data: arr });
+        }
         var newValue = this.state.item;
-        if(newValue == ""){
+        if(newValue === ""){
             alert("please enter an item");
         }
         else{
-            var str = localStorage.getItem("localData");
-            if(str != null){
-                var arr = JSON.parse(str); 
-            }
-            this.setState({data: arr });
             console.log(this.state.data);
             arr.push(newValue);
             console.log(arr);
@@ -45,7 +50,7 @@ class Todo extends Component {
     editItem = (k) =>  {
         var arr = this.state.data;
         let newData = arr.filter(function (id,index) {
-            return index == k;
+            return index === k;
         });
         let b=newData[0];
         var updItem = prompt("enter the updated item", b);
